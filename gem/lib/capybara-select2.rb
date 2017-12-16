@@ -45,7 +45,6 @@ module Capybara
     private
 
     def select_option(value)
-      wait_for_option_with_text(value)
       find(:xpath, "//body").find(select2_option_selector, text: value).click
     end
 
@@ -56,17 +55,6 @@ module Capybara
         "#{@drop_container} li.select2-result-selectable"
       end
     end
-
-    def wait_for_option_with_text(value)
-      begin
-        Timeout.timeout(2) do
-          sleep(0.1) until page.has_selector?(select2_option_selector, text: value)
-        end
-      rescue TimeoutError
-        find(:xpath, "//body").find(select2_option_selector, text: value).click
-      end
-    end
-
   end
 end
 
